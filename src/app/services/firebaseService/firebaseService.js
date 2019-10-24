@@ -99,7 +99,6 @@ class firebaseService {
     if (!firebase.apps.length) {
       return;
     }
-    console.log(customer.uid);
     return this.fdb
       .collection("customers")
       .doc(`${customer.uid}`)
