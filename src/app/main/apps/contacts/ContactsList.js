@@ -70,6 +70,11 @@ function ContactsList() {
       filterable: true
     },
     {
+      Header: "Plan",
+      accessor: "plan",
+      filterable: true
+    },
+    {
       Header: "Coupons",
       accessor: "coupons",
       width: 100,
@@ -180,6 +185,7 @@ function normalizeCustomer(customer) {
     phoneNumber: customer.data.phoneNumber,
     disable: customer.disable,
     status: customer.status,
+    plan: customer.data.plan || "N/A",
     coupons: customer.couponCount || 0,
     createdAt: customer.createdAt ? new Date(customer.createdAt.toDate()).toLocaleString("en-US") : "N/A"
   };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Toolbar,
   Button,
@@ -7,7 +7,11 @@ import {
   Typography,
   DialogActions,
   DialogContent,
-  AppBar
+  AppBar,
+  Select,
+  FormControl,
+  InputLabel,
+  MenuItem
 } from "@material-ui/core";
 import firebaseService from "app/services/firebaseService";
 
@@ -18,17 +22,24 @@ export default function ContactEdit({ customerID, customerData, handlerCloseDial
     lastName: customerData.lastName || "",
     businessName: customerData.businessName || "",
     phoneNumber: customerData.phoneNumber || "",
-    email: customerData.email || ""
+    email: customerData.email || "",
+    plan: customerData.plan
+  });
+
+  const planLabel = useRef(null);
+  const [planLabelWidth, setPlanLabelWidth] = useState(0);
+  useEffect(() => {
+    if (planLabel.current) setPlanLabelWidth(planLabel.current.offsetWidth);
   });
 
   useEffect(() => {
     firebaseService.getspecificCustomer(customerID).then(customer => {
       const {
         uid,
-        data: { firstName, lastName, businessName, phoneNumber, email }
+        data: { firstName, lastName, businessName, phoneNumber, email, plan }
       } = customer;
       setUid(uid);
-      setFields({ firstName, lastName, businessName, phoneNumber, email });
+      setFields({ firstName, lastName, businessName, phoneNumber, email, plan });
     });
   }, [customerID]);
 
@@ -118,6 +129,26 @@ export default function ContactEdit({ customerID, customerData, handlerCloseDial
           required
           fullWidth
         />
+        <FormControl variant="outlined" style={{ minWidth: 120, marginBottom: 20 }}>
+          <InputLabel ref={planLabel} htmlFor="plan-select">
+            Plan
+          </InputLabel>
+          <Select
+            value={fields.plan}
+            onChange={onChange}
+            labelWidth={planLabelWidth}
+            variant="outlined"
+            inputProps={{
+              name: "plan",
+              id: "plan-select"
+            }}
+          >
+            <MenuItem value=""></MenuItem>
+            <MenuItem value={"starter"}>Starter</MenuItem>
+            <MenuItem value={"growth"}>Growth</MenuItem>
+            <MenuItem value={"unlimited"}>Unlimited</MenuItem>
+          </Select>
+        </FormControl>
 
         <DialogActions className="justify-between pl-16">
           <Button variant="contained" color="primary" type="submit" onClick={handleSubmit}>

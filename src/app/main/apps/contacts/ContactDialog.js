@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useRef, useState } from "react";
 import {
   TextField,
   Button,
@@ -10,7 +10,11 @@ import {
   Typography,
   Toolbar,
   AppBar,
-  Avatar
+  Avatar,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem
 } from "@material-ui/core";
 import { useForm } from "@fuse/hooks";
 import FuseUtils from "@fuse/FuseUtils";
@@ -30,7 +34,8 @@ const defaultFormState = {
   phone: "",
   address: "",
   birthday: "",
-  businessAddress: ""
+  businessAddress: "",
+  plan: ""
 };
 
 function ContactDialog(props) {
@@ -38,6 +43,12 @@ function ContactDialog(props) {
   const contactDialog = useSelector(({ contactsApp }) => contactsApp.contacts.contactDialog);
 
   const { form, handleChange, setForm } = useForm(defaultFormState);
+
+  const planLabel = useRef(null);
+  const [planLabelWidth, setPlanLabelWidth] = useState(0);
+  useEffect(() => {
+    if (planLabel.current) setPlanLabelWidth(planLabel.current.offsetWidth);
+  });
 
   const initDialog = useCallback(() => {
     /**
@@ -89,7 +100,8 @@ function ContactDialog(props) {
           lastName: form.lastName,
           email: form.email,
           businessName: form.businessName,
-          businessAddress: form.businessAddress
+          businessAddress: form.businessAddress,
+          plan: form.plan
         },
         status: false,
         disabled: false
@@ -218,6 +230,30 @@ function ContactDialog(props) {
               rows={5}
               fullWidth
             />
+          </div>
+
+          <div className="flex">
+            <div className="min-w-48 pt-20"></div>
+            <FormControl variant="outlined" style={{ minWidth: 120, marginBottom: 20 }}>
+              <InputLabel ref={planLabel} htmlFor="plan-select">
+                Plan
+              </InputLabel>
+              <Select
+                value={form.plan}
+                onChange={handleChange}
+                labelWidth={planLabelWidth}
+                variant="outlined"
+                inputProps={{
+                  name: "plan",
+                  id: "plan-select"
+                }}
+              >
+                <MenuItem value=""></MenuItem>
+                <MenuItem value={"starter"}>Starter</MenuItem>
+                <MenuItem value={"growth"}>Growth</MenuItem>
+                <MenuItem value={"unlimited"}>Unlimited</MenuItem>
+              </Select>
+            </FormControl>
           </div>
         </DialogContent>
 
