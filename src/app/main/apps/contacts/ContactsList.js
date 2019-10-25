@@ -13,7 +13,7 @@ function ContactsList() {
   let statusUrlParam = getUrlParameter("status");
 
   useEffect(() => {
-    if (statusUrlParam == "active") setOnlyShowActive(true);
+    if (statusUrlParam === "active") setOnlyShowActive(true);
   }, [statusUrlParam]);
 
   useEffect(() => {
@@ -192,6 +192,7 @@ function normalizeCustomer(customer) {
 }
 
 function getUrlParameter(name) {
+  // eslint-disable-next-line no-useless-escape
   name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
   var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
   var results = regex.exec(window.location.search);

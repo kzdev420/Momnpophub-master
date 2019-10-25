@@ -28,6 +28,7 @@ export default function ContactEdit({ customerID, customerData, handlerCloseDial
 
   const planLabel = useRef(null);
   const [planLabelWidth, setPlanLabelWidth] = useState(0);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (planLabel.current) setPlanLabelWidth(planLabel.current.offsetWidth);
   });

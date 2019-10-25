@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "momnpophub-test"
+  },
+  "targets": {
+    "momnpophub-test": {
+      "hosting": {
+        "test": [
+          "momnpophub-test"
+        ]
+      }
+    }
   }
 }
