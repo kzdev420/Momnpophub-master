@@ -6,7 +6,7 @@ module.exports = async function handleCustomerUpdate(change, _context) {
   const old = change.before.data();
   const updated = change.after.data();
 
-  if (old.status !== updated.status) {
+  if (old.status !== undefined && old.status !== updated.status) {
     if (updated.status === true && updated.disabled === false) {
       console.log("creating auth account for customer ...");
       await signupCustomer(updated.data);
@@ -18,7 +18,7 @@ module.exports = async function handleCustomerUpdate(change, _context) {
       console.log("Deleting Auth Account for Customer");
       deleteAuthAccount(updated.data.email);
     }
-  } else if (old.disabled !== updated.disabled && updated.disabled === true) {
+  } else if (old.disabled !== undefined && old.disabled !== updated.disabled && updated.disabled === true) {
     console.log("Sending rejection email ...");
     sendRejectionEmail(updated.data);
   }

@@ -34,10 +34,10 @@ function ContactsList() {
       .then(() => (window.location = statusUrlParam ? "/apps/contacts/all?status=active" : "/apps/contacts/all"))
       .catch(error => console.log(error));
 
-  const changeDisableState = (uid, disable) =>
+  const changeDisabledState = (uid, disabled) =>
     firebaseService
-      .updateCustomer({ uid, disable })
-      .then(() => alert("Customer Disabled Status Changed! to: " + disable))
+      .updateCustomer({ uid, disabled })
+      .then(() => alert("Customer Disabled Status Changed! to: " + disabled))
       .then(() => (window.location = statusUrlParam ? "/apps/contacts/all?status=active" : "/apps/contacts/all"))
       .catch(error => console.log(error));
 
@@ -109,11 +109,11 @@ function ContactsList() {
               <Icon>toggle_off</Icon>
             </IconButton>
           )}
-          {row.original.disable ? (
+          {row.original.disabled ? (
             <IconButton
               onClick={ev => {
                 ev.stopPropagation();
-                changeDisableState(row.original.id, false);
+                changeDisabledState(row.original.id, false);
               }}
             >
               <Icon>lock_close</Icon>
@@ -122,7 +122,7 @@ function ContactsList() {
             <IconButton
               onClick={ev => {
                 ev.stopPropagation();
-                changeDisableState(row.original.id, true);
+                changeDisabledState(row.original.id, true);
               }}
             >
               <Icon>lock_open</Icon>
@@ -139,7 +139,7 @@ function ContactsList() {
           <IconButton
             onClick={ev => {
               ev.stopPropagation();
-              changeDisableState(row.original.id, true);
+              changeDisabledState(row.original.id, true);
             }}
           >
             <Icon>delete</Icon>
@@ -183,7 +183,7 @@ function normalizeCustomer(customer) {
     lastName: customer.data.lastName,
     firstName: customer.data.firstName,
     phoneNumber: customer.data.phoneNumber,
-    disable: customer.disable,
+    disabled: customer.disabled,
     status: customer.status,
     plan: customer.data.plan || "N/A",
     coupons: customer.couponCount || 0,
