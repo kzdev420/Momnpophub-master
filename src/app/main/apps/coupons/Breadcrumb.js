@@ -34,7 +34,7 @@ class Breadcrumb extends Component {
 			{	
 				// Find out which plan the customer is currently using
 				firebaseService.getProfileData(authUser.uid).then(user => {					
-					if (!user.status) {
+					if (!authUser.status) {
 						// User is not yet approved
 						window.location = 'pages/coming-soon';
 					}
