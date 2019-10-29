@@ -74,7 +74,7 @@ class firebaseService {
         .get()
         .then(doc => {
           const data = doc.data();
-          const status = data.status;
+          const status = doc.status;
           resolve(status);
         });
     });
