@@ -29,7 +29,7 @@
         "jss-extend": "6.2.0",
         "jwt-decode": "2.2.0",
         "keycode": "2.2.0",
-        "lodash": "4.17.11",
+        "lodash": "4.17.13",
         "markdown-to-jsx": "^6.10.3",
         "material-table": "1.40.0",
         "material-ui-pickers": "^2.2.4",
